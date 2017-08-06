@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "es5",
+    "outDir": "../../out-tsc/lib-es5/@bi8",
+    "baseUrl": "",
+    "types": [],
+      "experimentalDecorators": true
+  },
+  "files": [
+    "./index.ts",
+    "./typings.d.ts"
+  ],
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true,
+    "flatModuleOutFile": "am-uaa.js",
+    "flatModuleId": "am-uaa",
+    "genDir": "../../out-tsc/lib-gen-dir/"
+  }
+}
