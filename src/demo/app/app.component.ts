@@ -2,17 +2,18 @@ import { Component } from '@angular/core';
 import { Logger, LogService} from '@bi8/am-logger';
 import * as moment from 'moment'
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {UaaService} from "@bi8/am-uaa";
+import {UaaEvent, UaaEventService, UaaService} from "@bi8/am-uaa";
 
 @Component({
   selector: 'demo-app',
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  meaning: number;
   logger: Logger;
 
-  constructor(logService: LogService, private uaaService: UaaService) {
+  constructor(private logService: LogService,
+              public uaaService: UaaService,
+              private uaaEventService: UaaEventService) {
     this.logger = logService.getLogger(this.constructor.name);
   }
 
@@ -23,5 +24,20 @@ export class AppComponent {
   }
 
   doLogout(){
+    this.uaaService.doLogout().subscribe((result)=>{
+      this.logger.debug("Logged Out Successfully");
+    });
+  }
+
+  doSecureCall(){
+    this.uaaService.getIdentity(true).subscribe((result)=>{
+      this.logger.debug("Identity Loaded successfully", result);
+    }, (error)=>{
+      this.logger.error("There is an error:", error);
+    });
+  }
+  
+  loginProvided(){
+    this.uaaEventService.broadcast(UaaEvent.LOGIN_PROVIDED);
   }
 }

@@ -12,14 +12,14 @@ const sourcemaps = require('rollup-plugin-sourcemaps');
 const inlineResources = require('./inline-resources');
 
 
-const libName = require('./package.json').name;
+const libName = 'am-uaa'; //require('./package.json').name;
 const rootFolder = path.join(__dirname);
 const compilationFolder = path.join(rootFolder, 'out-tsc');
 const srcFolder = path.join(rootFolder, 'src/lib');
 const distFolder = path.join(rootFolder, 'dist');
 const tempLibFolder = path.join(compilationFolder, 'lib');
-const es5OutputFolder = path.join(compilationFolder, 'lib-es5');
-const es2015OutputFolder = path.join(compilationFolder, 'lib-es2015');
+const es5OutputFolder = path.join(compilationFolder, 'lib-es5/@bi8');
+const es2015OutputFolder = path.join(compilationFolder, 'lib-es2015/@bi8');
 
 return Promise.resolve()
   // Copy library to temporary folder and inline html/css.

@@ -19,7 +19,7 @@
     "strictMetadataEmit": true,
     "skipTemplateCodegen": true,
     "flatModuleOutFile": "am-uaa.js",
-    "flatModuleId": "am-uaa",
-    "genDir": "../../out-tsc/lib-gen-dir/"
+    "flatModuleId": "@bi8/am-uaa",
+    "genDir": "../../out-tsc/lib-gen-dir"
   }
 }

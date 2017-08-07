@@ -4,9 +4,10 @@ import {UaaService} from './am-uaa/uaa.service';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {UaaInterceptor} from "./am-uaa/uaa.interceptor";
 import {LogModule} from "@bi8/am-logger";
+import {UaaEventService} from "./am-uaa/uaa.event.service";
 
 @NgModule({
-    providers: [UaaService, {
+    providers: [UaaService, UaaEventService, {
         provide: HTTP_INTERCEPTORS,
         useClass: UaaInterceptor,
         multi: true,

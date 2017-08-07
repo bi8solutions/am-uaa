@@ -4,6 +4,7 @@ import { AppComponent }  from './app.component';
 import { HttpClientModule } from "@angular/common/http";
 import { LogConfig, LogLevel, LogModule } from "@bi8/am-logger";
 import { UaaConfig, UaaModule } from "@bi8/am-uaa";
+import {StorageModule} from "@bi8/am-storage";
 
 const logConfig : LogConfig = {
   level: LogLevel.debug
@@ -17,6 +18,7 @@ const uaaConfig : UaaConfig = {
       BrowserModule,
       LogModule,
       UaaModule,
+      StorageModule,
       HttpClientModule
   ],
   declarations: [ AppComponent ],
