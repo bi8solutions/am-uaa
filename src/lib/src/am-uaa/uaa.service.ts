@@ -29,7 +29,8 @@ export class UaaService {
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
     return this.hc.post('/api/uaa/session/login', formBody, {
-        headers: headers                                                                        
+        headers: headers,
+        responseType: 'text'
     }).map((response)=>{
       this.uaaEventService.broadcast(UaaEvent.LOGIN_SUCCESS);
       this.uaaEventService.broadcast(UaaEvent.LOGIN_PROVIDED);
@@ -39,7 +40,9 @@ export class UaaService {
 
   doLogout(silent?: boolean) : Observable<any> {
     this.uaaEventService.broadcast(UaaEvent.LOGOUT_START);
-    return this.hc.get('/api/uaa/session/logout').map((response)=>{
+    return this.hc.get('/api/uaa/session/logout', {
+      responseType: 'text'
+    }).map((response)=>{
       this.storageService.remove(IDENTITY_KEY);
       this.uaaEventService.broadcast(UaaEvent.LOGOUT_SUCCESS);
     });

@@ -1,6 +1,6 @@
 {
   "name": "@bi8/am-uaa",
-  "version": "0.0.4",
+  "version": "0.0.8",
   "description": "Angular Material User Authentication And Authorization",
   "main": "./am-uaa.umd.js",
   "module": "./am-uaa.es5.js",
@@ -18,7 +18,7 @@
     "prebuild": "npm run clean",
     "build": "node build.js",
     "build-demo": "rimraf dist && webpack --progress --profile --bail",
-    "serve-demo": "webpack-dev-server --https --inline --progress --port 8000 ",
+    "serve-demo": "webpack-dev-server --https --inline --progress --port 8000 --host 192.168.88.42",
     "test-watch": "karma start karma.conf.js --no-single-run --auto-watch",
     "test": "karma start karma.conf.js --single-run",
     "preintegration": "npm run clean && npm run build && cd integration && npm install",
@@ -32,13 +32,13 @@
     "@angular/core": ">=4.0.0 <5.0.0 || >=4.0.0-beta <5.0.0"
   },
   "devDependencies": {
-    "@angular/common": "^4.3.3",
-    "@angular/compiler": "^4.3.3",
-    "@angular/compiler-cli": "^4.3.3",
-    "@angular/core": "^4.3.3",
-    "@angular/forms": "^4.3.3",
-    "@angular/platform-browser": "^4.3.3",
-    "@angular/platform-browser-dynamic": "^4.3.3",
+    "@angular/common": "^4.3.4",
+    "@angular/compiler": "^4.3.4",
+    "@angular/compiler-cli": "^4.3.4",
+    "@angular/core": "^4.3.4",
+    "@angular/forms": "^4.3.4",
+    "@angular/platform-browser": "^4.3.4",
+    "@angular/platform-browser-dynamic": "^4.3.4",
     "@angularclass/hmr": "^1.0.1",
     "@angularclass/hmr-loader": "^3.0.4",
     "@bi8/am-logger": "0.0.2",
@@ -52,7 +52,7 @@
     "codelyzer": "2.0.0",
     "concurrently": "3.2.0",
     "copy-webpack-plugin": "^4.0.0",
-    "core-js": "^2.4.1",
+    "core-js": "^2.5.0",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "file-loader": "^0.10.0",
@@ -86,7 +86,7 @@
     "rollup": "^0.41.5",
     "rollup-plugin-sourcemaps": "^0.4.1",
     "rollup-plugin-uglify": "^1.0.1",
-    "rxjs": "^5.4.2",
+    "rxjs": "^5.4.3",
     "sass-loader": "^6.0.1",
     "shelljs": "^0.7.0",
     "style-loader": "^0.13.0",
@@ -102,11 +102,16 @@
     "zone.js": "^0.8.16"
   },
   "dependencies": {
+    "@angular/http": "^4.3.4",
+    "@angular/router": "^4.3.4",
     "@bi8/am-storage": "0.0.1"
   },
   "keywords": [
-    "Angular",
+    "Angular2",
     "Material",
-    "Logger"
+    "Authentication",
+    "Retry Failed",
+    "Response Cache",
+    "Http Client"
   ]
 }
