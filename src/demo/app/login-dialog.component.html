@@ -1,0 +1,24 @@
+<form [formGroup]="loginForm" fxFlex="400px">
+  <div fxLayout="column">
+    <md-toolbar color="primary">
+      <span>{{data.header}}</span>
+    </md-toolbar>
+
+
+    <div fxLayout="column" style="margin-top: 20px;">
+      <div *ngIf="errorMessage" style="margin-bottom: 10px;">{{errorMessage}}</div>
+
+      <md-input-container class="md-icon-float md-block">
+        <input type="text" mdInput placeholder="Username" [formControl]="username">
+      </md-input-container>
+
+      <md-input-container>
+        <input type="password" mdInput placeholder="Password" [formControl]="password">
+      </md-input-container>
+      <div fxLayout="row">
+        <button md-raised-button (click)="submit()" md-button>Login</button>
+      </div>
+    </div>
+  </div>
+</form>
+

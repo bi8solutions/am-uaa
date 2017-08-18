@@ -3,6 +3,8 @@ import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/rou
 
 import {UaaService} from "./uaa.service";
 import {LogService, Logger} from "@bi8/am-logger";
+import {Observable} from "rxjs/Observable";
+import {Observer} from "rxjs/Observer";
 
 @Injectable()
 export class IdentityResolver implements Resolve<any> {
@@ -12,11 +14,15 @@ export class IdentityResolver implements Resolve<any> {
     this.logger = logService.getLogger(this.constructor.name);
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<any> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     this.logger.debug("Resolving identity");
-    return this.uaaService.getIdentity(true).toPromise().then(identity => {
-      this.logger.debug("Identity resolved", identity);
-      return identity;
+
+    return Observable.create((observer: Observer<any[]>) => {
+      this.uaaService.getIdentity(true).subscribe(identity => {
+        this.logger.debug("Identity resolved", identity);
+        observer.next(identity);
+        observer.complete();
+      });
     });
   }
 }

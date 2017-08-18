@@ -33,14 +33,4 @@ export class UaaInterceptor implements HttpInterceptor {
       }
     });
   }
-
-  collectFailedRequest(request): void {
-    this.cachedRequests.push(request);
-  }
-
-  retryFailedRequests(hc: HttpClient): void {
-    this.cachedRequests.forEach((req, index)=>{
-      hc.request(req);
-    })
-  }
 }

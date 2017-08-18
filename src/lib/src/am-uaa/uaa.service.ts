@@ -48,7 +48,7 @@ export class UaaService {
     });
   }
 
-  getIdentity(refresh?: boolean, silent?: boolean){
+  getIdentity(refresh?: boolean, silent?: boolean) : Observable<any> {
     if (refresh){
       this.uaaEventService.broadcast(UaaEvent.LOAD_IDENTITY_START);
       return this.hc.get('/api/uaa/session/identity').map((response)=>{
