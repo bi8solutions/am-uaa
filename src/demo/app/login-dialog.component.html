@@ -4,17 +4,20 @@
       <span>{{data.header}}</span>
     </md-toolbar>
 
-
     <div fxLayout="column" style="margin-top: 20px;">
       <div *ngIf="errorMessage" style="margin-bottom: 10px;">{{errorMessage}}</div>
 
-      <md-input-container class="md-icon-float md-block">
-        <input type="text" mdInput placeholder="Username" [formControl]="username">
-      </md-input-container>
+      <div fxLayout="row">
+        <md-input-container fxFlexFill>
+          <input type="text" mdInput placeholder="Username" [formControl]="username">
+        </md-input-container>
+      </div>
 
-      <md-input-container>
-        <input type="password" mdInput placeholder="Password" [formControl]="password">
-      </md-input-container>
+      <div fxLayout="row">
+        <md-input-container fxFlexFill>
+          <input type="password" mdInput placeholder="Password" [formControl]="password">
+        </md-input-container>
+      </div>
       <div fxLayout="row">
         <button md-raised-button (click)="submit()" md-button>Login</button>
       </div>

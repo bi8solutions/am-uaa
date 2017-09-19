@@ -14,7 +14,11 @@ export class UaaInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const xRequestedWith = req.clone({headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')});
+    const xRequestedWith = req.clone({headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
+      .set('Cache-Control', 'no-cache')
+      .set('Pragma', 'no-cache')
+      .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+    });
     let observable = next.handle(xRequestedWith);
 
     return observable.map((event: HttpEvent<any>) => {
