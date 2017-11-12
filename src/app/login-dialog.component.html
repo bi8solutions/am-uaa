@@ -1,0 +1,27 @@
+<form [formGroup]="loginForm" fxFlex="400px">
+  <div fxLayout="column">
+    <mat-toolbar color="primary">
+      <span>{{data.header}}</span>
+    </mat-toolbar>
+
+    <div fxLayout="column" style="margin-top: 20px;">
+      <div *ngIf="errorMessage" style="margin-bottom: 10px;">{{errorMessage}}</div>
+
+      <div fxLayout="row">
+        <mat-form-field fxFlexFill>
+          <input type="text" matInput placeholder="Username" [formControl]="username">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+        <mat-form-field fxFlexFill>
+          <input type="password" matInput placeholder="Password" [formControl]="password">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <button mat-raised-button (click)="submit()" mat-button>Login</button>
+      </div>
+    </div>
+  </div>
+</form>
+
