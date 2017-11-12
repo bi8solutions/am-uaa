@@ -1,6 +1,6 @@
 {
   "name": "@bi8/am-uaa",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Angular Material User Authentication And Authorization",
   "main": "./am-uaa.umd.js",
   "module": "./am-uaa.es5.js",
