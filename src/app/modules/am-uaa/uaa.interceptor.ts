@@ -1,9 +1,11 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
-import {Observable} from 'rxjs/Rx';
 import * as _ from 'lodash';
 import {UaaEventService} from "./uaa.event.service";
 import {UaaEvent} from "./uaa.event";
+import {Observable} from "rxjs/Observable";
+
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class UaaInterceptor implements HttpInterceptor {

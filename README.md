@@ -1,27 +1,64 @@
-# AmUaa
+# Angular Material Storage
+
+AmUaa is a simple framework for handling simple User Authentication.  
+
+Please note that this is a *Proof of Concept* library and not meant for production use and that the API can 
+change at any time.
+
+Version 5.0 is a update to the way the library gets build as well as depending on Angular5.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+To install AmUaa in your project, simply do
 
-## Code scaffolding
+```
+npm i @bi8/am-uaa
+```  
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+AmUaa depends on/uses ```@bi8/am-storage``` and ```@bi8/am-logger```
+
+## Configuration
+
+Import the AmUaaModule
+
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+import {UaaConfig} from "./modules/am-uaa/uaa.config";
+import {AmUaaModule} from "./modules/am-uaa/am-uaa.module";
+
+const uaaConfig : UaaConfig = {};
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AmUaaModule,
+  ],
+  entryComponents: [],
+  providers:    [
+      { provide: 'UaaConfig', useValue: uaaConfig }
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+``` 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `npm i` to install all the dependencies. To create the bundle/distribution, run `npm run packagr`
+which will do a new release under the dist folder. 
 
-## Running unit tests
+## Project Layout
+This is basically a CLI generated application with the addition of [ng-packagr](https://www.npmjs.com/package/ng-packagr) to create the distribution 
+bundle.  The app component imports the AmStorageModule that is located under the modules directory.  Only the module is packaged
+an not the whole example project.  
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Please see Nikolas LeBlanc's article: [Building an Angular 4 Component Library with the Angular CLI and ng-packagr](https://medium.com/@ngl817/building-an-angular-4-component-library-with-the-angular-cli-and-ng-packagr-53b2ade0701e) 
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

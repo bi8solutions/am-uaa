@@ -3,6 +3,7 @@ import {UaaConfig} from './uaa.config';
 import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
 import {LogService, Logger} from "@bi8/am-logger";
 import {Observable} from "rxjs/Observable";
+import 'rxjs/add/operator/map';
 
 import {UaaEventService} from "./uaa.event.service";
 import {UaaEvent} from "./uaa.event";
