@@ -1,4 +1,4 @@
-# Angular Material Storage
+# Angular Material Authentication and Authorization
 
 AmUaa is a simple framework for handling simple User Authentication.  
 

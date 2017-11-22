@@ -6,6 +6,8 @@ import {UaaEvent} from "./uaa.event";
 import {Observable} from "rxjs/Observable";
 
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class UaaInterceptor implements HttpInterceptor {
