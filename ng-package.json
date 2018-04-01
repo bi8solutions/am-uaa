@@ -1,17 +1,13 @@
 {
   "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "whitelistedNonPeerDependencies": [
+    "."
+  ],
   "lib": {
-    "entryFile": "public_api.ts",
-    "externals": {
-      "rxjs": "rxjs",
-      "lodash": "lodash",
-      "@angular/material": "ng.material",
-      "@angular/flex-layout" : "ng.flex-layout",
+    "entryFile": "src/public_api.ts",
+    "umdModuleIds": {
       "@bi8/am-logger": "am-logger",
-      "@bi8/am-storage": "am-storage",
-      "@bi8/am-uaa": "am-uaa",
-      "@bi8/am-dyn-form": "am-dyn-form",
-      "@bi8/am-data-table": "am-data-table"
+      "@bi8/am-storage": "am-storage"
     }
   }
 }

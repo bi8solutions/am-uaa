@@ -33,6 +33,9 @@ npm-debug.log
 testem.log
 /typings
 
+/.yalc
+dist.tgz
+
 # e2e
 /e2e/*.js
 /e2e/*.map
