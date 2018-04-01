@@ -13,7 +13,6 @@
     "package": "DEBUG=true ng-packagr",
     "install:local": "yalc add @bi8/am-logger && yalc add @bi8/am-storage",
     "publish:local": "yarn run package && cd dist && yalc publish",
-    "publish:remote": "",
     "run:serve": "ng serve --ssl --proxy-config proxy-conf.json --port 8000"
   },
   "private": false,
@@ -35,10 +34,10 @@
     "@angular/platform-browser": "~5.2.0",
     "@angular/platform-browser-dynamic": "~5.2.0",
     "@angular/router": "~5.2.0",
-    "@bi8/am-logger": "file:.yalc/@bi8/am-logger",
-    "@bi8/am-storage": "file:.yalc/@bi8/am-storage",
-    "lodash": "^4.17.4",
+    "@bi8/am-logger": "^5.2.0",
+    "@bi8/am-storage": "^5.2.0",
     "core-js": "^2.4.1",
+    "lodash": "^4.17.4",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },

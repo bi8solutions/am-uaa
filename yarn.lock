@@ -27,7 +27,7 @@
     "@ngtools/json-schema" "^1.1.0"
     rxjs "^5.5.6"
 
-"@angular/animations@^5.0.2", "@angular/animations@~5.2.0":
+"@angular/animations@~5.2.0":
   version "5.2.9"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-5.2.9.tgz#220db9fb5a52a193db0023d721b23ddd25a75770"
   dependencies:
@@ -104,7 +104,7 @@
   optionalDependencies:
     node-sass "^4.7.2"
 
-"@angular/common@^5.0.2", "@angular/common@~5.2.0":
+"@angular/common@^5.2.0", "@angular/common@~5.2.0":
   version "5.2.9"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-5.2.9.tgz#beb25d4434498abae56bd8dc2c01ade3f6c45e81"
   dependencies:
@@ -119,13 +119,13 @@
     reflect-metadata "^0.1.2"
     tsickle "^0.27.2"
 
-"@angular/compiler@^5.0.2", "@angular/compiler@~5.2.0":
+"@angular/compiler@^5.2.0", "@angular/compiler@~5.2.0":
   version "5.2.9"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-5.2.9.tgz#1d03bc1e8b38c259bc58114d691c2140d244f8f5"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/core@^5.0.2", "@angular/core@~5.2.0":
+"@angular/core@^5.2.0", "@angular/core@~5.2.0":
   version "5.2.9"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-5.2.9.tgz#3daf13ef9aa754b9954ed21da3eb322e8b20f667"
   dependencies:
@@ -137,13 +137,13 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/forms@^5.0.2", "@angular/forms@~5.2.0":
+"@angular/forms@~5.2.0":
   version "5.2.9"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-5.2.9.tgz#12c45b3a02c398b354f09cc740d914cd904c0c9c"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/http@^5.0.2", "@angular/http@~5.2.0":
+"@angular/http@~5.2.0":
   version "5.2.9"
   resolved "https://registry.yarnpkg.com/@angular/http/-/http-5.2.9.tgz#2ffea536e181bc97e2867593d57425ea7853285b"
   dependencies:
@@ -159,59 +159,55 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser-dynamic@^5.0.2", "@angular/platform-browser-dynamic@~5.2.0":
+"@angular/platform-browser-dynamic@^5.2.0", "@angular/platform-browser-dynamic@~5.2.0":
   version "5.2.9"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-5.2.9.tgz#86075b7bb694861f722ceda29aae186b045c6b7d"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser@^5.0.2", "@angular/platform-browser@~5.2.0":
+"@angular/platform-browser@^5.2.0", "@angular/platform-browser@~5.2.0":
   version "5.2.9"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-5.2.9.tgz#9ee76327b1b3affad68ffa839058661b7704bc2c"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/router@^5.0.2", "@angular/router@~5.2.0":
+"@angular/router@^5.2.0", "@angular/router@~5.2.0":
   version "5.2.9"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-5.2.9.tgz#0369df6e60c6da3a5842c6eb35e3958d4ffe727e"
   dependencies:
     tslib "^1.7.1"
 
-"@bi8/am-logger@^5.0.0", "@bi8/am-logger@^5.0.8":
-  version "5.0.8"
-  resolved "https://registry.yarnpkg.com/@bi8/am-logger/-/am-logger-5.0.8.tgz#5a60c2fa9b0c8b0fd1da52a3895a019a8373eaca"
+"@bi8/am-logger@^5.2.0", "@bi8/am-logger@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@bi8/am-logger/-/am-logger-5.2.1.tgz#b8057463e518d28309e92cfdbc222970788e164f"
   dependencies:
-    "@angular/animations" "^5.0.2"
-    "@angular/common" "^5.0.2"
-    "@angular/compiler" "^5.0.2"
-    "@angular/core" "^5.0.2"
-    "@angular/forms" "^5.0.2"
-    "@angular/http" "^5.0.2"
-    "@angular/platform-browser" "^5.0.2"
-    "@angular/platform-browser-dynamic" "^5.0.2"
-    "@angular/router" "^5.0.2"
-    core-js "^2.5.1"
-    rxjs "^5.5.2"
-    zone.js "^0.8.18"
+    "@angular/common" "^5.2.0"
+    "@angular/compiler" "^5.2.0"
+    "@angular/core" "^5.2.0"
+    "@angular/platform-browser" "^5.2.0"
+    "@angular/platform-browser-dynamic" "^5.2.0"
+    "@angular/router" "^5.2.0"
+    core-js "^2.4.1"
+    rxjs "^5.5.6"
+    tslib "^1.7.1"
+    zone.js "^0.8.19"
 
-"@bi8/am-storage@^5.0.0":
-  version "5.0.10"
-  resolved "https://registry.yarnpkg.com/@bi8/am-storage/-/am-storage-5.0.10.tgz#9f4fa0303ea6a4cc5595b6f1d3bc3b28705bcc2e"
+"@bi8/am-storage@^5.2.0":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@bi8/am-storage/-/am-storage-5.2.1.tgz#60955900f6ca6a5a14a42aa7d4228e5760471ddc"
   dependencies:
-    "@angular/animations" "^5.0.2"
-    "@angular/common" "^5.0.2"
-    "@angular/compiler" "^5.0.2"
-    "@angular/core" "^5.0.2"
-    "@angular/forms" "^5.0.2"
-    "@angular/http" "^5.0.2"
-    "@angular/platform-browser" "^5.0.2"
-    "@angular/platform-browser-dynamic" "^5.0.2"
-    "@angular/router" "^5.0.2"
-    "@bi8/am-logger" "^5.0.8"
-    core-js "^2.5.1"
+    "@angular/common" "^5.2.0"
+    "@angular/compiler" "^5.2.0"
+    "@angular/core" "^5.2.0"
+    "@angular/platform-browser" "^5.2.0"
+    "@angular/platform-browser-dynamic" "^5.2.0"
+    "@angular/router" "^5.2.0"
+    "@bi8/am-logger" "^5.2.1"
+    core-js "^2.4.1"
     lodash "^4.17.4"
-    rxjs "^5.5.2"
-    zone.js "^0.8.18"
+    rxjs "^5.5.6"
+    tslib "^1.7.1"
+    zone.js "^0.8.19"
 
 "@ngtools/json-schema@1.2.0":
   version "1.2.0"
@@ -1572,7 +1568,7 @@ copy-webpack-plugin@~4.4.1:
     p-limit "^1.0.0"
     serialize-javascript "^1.4.0"
 
-core-js@^2.2.0, core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.1:
+core-js@^2.2.0, core-js@^2.4.0, core-js@^2.4.1:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.4.tgz#f2c8bf181f2a80b92f360121429ce63a2f0aeae0"
 
@@ -5964,7 +5960,7 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs@^5.5.0, rxjs@^5.5.2, rxjs@^5.5.6:
+rxjs@^5.5.0, rxjs@^5.5.6:
   version "5.5.8"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.8.tgz#b2b0809a57614ad6254c03d7446dea0d83ca3791"
   dependencies:
@@ -7652,6 +7648,6 @@ yn@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
 
-zone.js@^0.8.18, zone.js@^0.8.19:
+zone.js@^0.8.19:
   version "0.8.23"
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.23.tgz#7ab0bc9bedb4b9197864563841b4b478dd9bfce7"

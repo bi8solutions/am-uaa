@@ -6,6 +6,8 @@
   "lib": {
     "entryFile": "src/public_api.ts",
     "umdModuleIds": {
+      "lodash": "_",
+      "rxjs": "rxjs",
       "@bi8/am-logger": "am-logger",
       "@bi8/am-storage": "am-storage"
     }
