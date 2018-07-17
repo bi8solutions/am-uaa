@@ -55,7 +55,6 @@ export class BaseUaaService {
   getIdentity(refresh?: boolean, silent?: boolean): Observable<any> | any {
     if (refresh) {
       this.eventService.broadcast(UaaEvent.LOAD_IDENTITY_START);
-      console.log('return http get');
       return this.httpClient.get('/api/uaa/session/identity').map((response) => {
         this.storeService.set(IDENTITY_KEY, response);
         this.eventService.broadcast(UaaEvent.LOAD_IDENTITY_SUCCESS);

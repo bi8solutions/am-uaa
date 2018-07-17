@@ -1,6 +1,6 @@
 {
   "/oauth": {
-    "target": "http://localhost:8045",
+    "target": "http://localhost:8043",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

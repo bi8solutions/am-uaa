@@ -23,8 +23,8 @@ export class UaaService extends BaseUaaService {
   TOKEN_EXPIRE_KEY = 'expires_at';
   REFRESH_EXPIRE_KEY = 'refresh_expires_at';
 
-  GRANT_TYPE = 'password';
-  CLIENT_ID = 'webapp';
+  GRANT_TYPE: string;
+  CLIENT_ID: string;
 
   logger: Logger;
 
@@ -35,6 +35,9 @@ export class UaaService extends BaseUaaService {
               private uaaEventService: UaaEventService) {
     super(config, hc, logService, storageService, uaaEventService);
     this.logger = logService.getLogger(this.constructor.name);
+
+    this.GRANT_TYPE = config.grantType == null ? 'password' : config.grantType;
+    this.CLIENT_ID = config.clientID == null ? 'webapp' : config.clientID;
   }
 
   getToken() {

@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
   }
 
   callEndpoint() {
-    this.httpService.getCall('/api/hello').subscribe(res => {
+    this.httpService.getCall('/api/uaa/session/jwt/greet').subscribe(res => {
       console.dir(res);
     });
   }

@@ -112,7 +112,6 @@ export class UaaInterceptor implements HttpInterceptor {
 
   private handle401Error(req: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshingToken) {
-      console.log('no refresh in progress');
       this.isRefreshingToken = true;
 
       // Reset here so that the following requests wait until the token
@@ -133,7 +132,6 @@ export class UaaInterceptor implements HttpInterceptor {
         this.isRefreshingToken = false;
       });
     } else {
-      console.log('refresh in progress');
       return this.tokenSubject
         .filter(token => token != null)
         .take(1)
