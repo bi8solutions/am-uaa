@@ -12,12 +12,12 @@ import {UaaEvent} from './uaa.event';
 import {StorageService} from '@bi8/am-storage';
 import * as moment from 'moment';
 import * as jwt_decode from 'jwt-decode';
+import {BaseUaaService} from './base.uaa.service';
 
 
 @Injectable()
-export class UaaService {
+export class UaaService extends BaseUaaService {
 
-  IDENTITY_KEY = '_uaa_identity_';
   TOKEN_KEY = 'id_token';
   REFRESH_KEY = 'refresh_token';
   TOKEN_EXPIRE_KEY = 'expires_at';
@@ -33,7 +33,7 @@ export class UaaService {
               private logService: LogService,
               private storageService: StorageService,
               private uaaEventService: UaaEventService) {
-
+    super(config, hc, logService, storageService, uaaEventService);
     this.logger = logService.getLogger(this.constructor.name);
   }
 
@@ -42,6 +42,10 @@ export class UaaService {
   }
 
   doLogin(username: string, password: string): Observable<any> {
+    if (!this.config.useJwt) {
+      return super.doLogin(username, password);
+    }
+
     const formBody = `grant_type=${this.GRANT_TYPE}&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&client=${encodeURIComponent(this.CLIENT_ID)}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -85,7 +89,11 @@ export class UaaService {
     this.storageService.set(this.REFRESH_EXPIRE_KEY, JSON.stringify(refreshExpiresAt.valueOf()));
   }
 
-  doLogout() {
+  doLogout(silent?: boolean) {
+    if (!this.config.useJwt) {
+      return super.doLogout(silent);
+    }
+
     this.uaaEventService.broadcast(UaaEvent.LOGOUT_START);
     this.storageService.remove(this.TOKEN_KEY);
     this.storageService.remove(this.REFRESH_KEY);
@@ -114,12 +122,22 @@ export class UaaService {
   }
 
   getIdentity(refresh?: boolean, silent?: boolean): Observable<any> | any {
+    if (!this.config.useJwt) {
+      return super.getIdentity(refresh, silent);
+    }
+
     if (this.isLoggedIn() || this.refreshValid()) {
       this.uaaEventService.broadcast((UaaEvent.LOAD_IDENTITY_START));
       const identity = this.storageService.get(this.TOKEN_KEY);
-      return jwt_decode(identity);
+      return Observable.of(jwt_decode(identity));
     } else {
-      return null;
+      this.uaaEventService.broadcast(UaaEvent.LOGIN_REQUIRED);
+      return this.uaaEventService.getEventSourceObserver()
+        .filter(event => event === UaaEvent.LOGIN_DIALOG_BEFORE_CLOSED)
+        .switchMap(event => {
+          const identity = this.storageService.get(this.TOKEN_KEY);
+          return Observable.of(jwt_decode(identity));
+        });
     }
   }
 }
