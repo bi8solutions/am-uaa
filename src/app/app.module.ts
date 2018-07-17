@@ -19,7 +19,9 @@ const logConfig : LogConfig = {
   level: LogLevel.debug
 };
 
-const uaaConfig : UaaConfig = {};
+const uaaConfig: UaaConfig = {
+  useJwt: true
+};
 
 @NgModule({
   declarations: [

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -21,9 +21,10 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/throw';
-import {UaaService} from './uaa.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {StorageService} from '@bi8/am-storage';
+import {UaaConfig} from './uaa.config';
+import {UaaService} from './uaa.service';
 
 @Injectable()
 export class UaaInterceptor implements HttpInterceptor {
@@ -32,15 +33,51 @@ export class UaaInterceptor implements HttpInterceptor {
   isRefreshingToken = false;
   tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
-  constructor(private uaaEventService: UaaEventService,
+  constructor(@Inject('UaaConfig') private config: UaaConfig,
+              private uaaEventService: UaaEventService,
               private storageService: StorageService,
               private uaaService: UaaService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (this.config.useJwt) {
+      return this.jwtIntercept(req, next);
+    } else {
+      return this.sessionIntercept(req, next);
+    }
+  }
 
+  private sessionIntercept(req, next) {
+    const xRequestedWith = req.clone({
+      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
+        .set('Cache-Control', 'no-cache')
+        .set('Pragma', 'no-cache')
+        .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+    });
+
+    const observable = next.handle(xRequestedWith);
+
+    return observable.map((event: HttpEvent<any>) => {
+      return event;
+    }).catch(error => {
+      if (error instanceof HttpErrorResponse) {
+        if (error.status === 401 && !_.endsWith(error.url, '/login')) {
+          this.uaaEventService.broadcast(UaaEvent.LOGIN_REQUIRED);
+          return this.uaaEventService.getEventSourceObserver().filter(event => {
+            return event == UaaEvent.LOGIN_PROVIDED;
+          }).concatMap(event => observable.retry(1));
+        } else {
+          return Observable.throw(error);
+          //return Observable.empty() as Observable<HttpEvent<any>>;
+        }
+      }
+    });
+
+  }
+
+  private jwtIntercept(req, next) {
     if (req.headers.has('Authorization')) {
-      return next.handle(req.clone());
+      return next.handle(req);
     }
 
     const observable = next.handle(this.addToken(req, this.uaaService.getToken()));
@@ -48,9 +85,9 @@ export class UaaInterceptor implements HttpInterceptor {
       if (error instanceof HttpErrorResponse) {
         switch ((<HttpErrorResponse>error).status) {
           case 400:
-            return this.handle400Error(error, req, observable);
+            return this.handle400Error(error, req, next);
           case 401:
-            return this.handle401Error(req, next, observable);
+            return this.handle401Error(req, next);
           default:
             return Observable.throw(error);
         }
@@ -64,17 +101,18 @@ export class UaaInterceptor implements HttpInterceptor {
     return req.clone({setHeaders: {'Authorization': `Bearer ${token}`}});
   }
 
-  private handle400Error(error, req, observable) {
+  private handle400Error(error, req, next) {
     if (error && error.status === 400 && error.error && error.error.error === 'invalid_grant') {
       // If we get a 400 and the error message is 'invalid_grant', the token is no longer valid so logout.
-      return this.requireLogin(req, observable);
+      return this.requireLogin(req, next);
     }
 
     return Observable.throw(error);
   }
 
-  private handle401Error(req: HttpRequest<any>, next: HttpHandler, observable: Observable<any>) {
+  private handle401Error(req: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshingToken) {
+      console.log('no refresh in progress');
       this.isRefreshingToken = true;
 
       // Reset here so that the following requests wait until the token
@@ -95,6 +133,7 @@ export class UaaInterceptor implements HttpInterceptor {
         this.isRefreshingToken = false;
       });
     } else {
+      console.log('refresh in progress');
       return this.tokenSubject
         .filter(token => token != null)
         .take(1)
@@ -108,9 +147,10 @@ export class UaaInterceptor implements HttpInterceptor {
     this.uaaService.doLogout();
     this.uaaEventService.broadcast(UaaEvent.LOGIN_REQUIRED);
     return this.uaaEventService.getEventSourceObserver()
-      .filter(event => event === UaaEvent.LOGIN_PROVIDED)
+      .filter(event => event === UaaEvent.LOGIN_DIALOG_BEFORE_CLOSED)
       .switchMap(event => {
-        return next.handle(this.addToken(req, next));
+        this.isRefreshingToken = false;
+        return next.handle(this.addToken(req, this.uaaService.getToken()));
       });
   }
 }
