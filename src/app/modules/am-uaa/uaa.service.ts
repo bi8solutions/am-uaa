@@ -25,6 +25,7 @@ export class UaaService extends BaseUaaService {
 
   GRANT_TYPE: string;
   CLIENT_ID: string;
+  CLIENT_PASSWORD: string;
 
   logger: Logger;
 
@@ -38,6 +39,7 @@ export class UaaService extends BaseUaaService {
 
     this.GRANT_TYPE = config.grantType == null ? 'password' : config.grantType;
     this.CLIENT_ID = config.clientID == null ? 'webapp' : config.clientID;
+    this.CLIENT_PASSWORD = config.clientPassword == null ? '' : config.clientPassword;
   }
 
   getToken() {
@@ -52,8 +54,9 @@ export class UaaService extends BaseUaaService {
     const formBody = `grant_type=${this.GRANT_TYPE}&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&client=${encodeURIComponent(this.CLIENT_ID)}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${btoa(`${this.CLIENT_ID}:`)}`
+      'Authorization': `Basic ${btoa(`${this.CLIENT_ID}:${this.CLIENT_PASSWORD}`)}`
     });
+    console.dir(headers);
 
     return this.hc.post<any>('/oauth/token', formBody, {headers: headers})
       .map(res => {

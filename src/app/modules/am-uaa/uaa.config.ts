@@ -4,4 +4,5 @@ export interface UaaConfig {
   useJwt?: boolean;
   grantType?: string;
   clientID?: string;
+  clientPassword?: string;
 }
