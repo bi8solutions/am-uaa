@@ -37,6 +37,7 @@
     "@bi8/am-logger": "^5.2.0",
     "@bi8/am-storage": "^5.2.0",
     "core-js": "^2.4.1",
+    "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
