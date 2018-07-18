@@ -5,6 +5,8 @@ import {UaaConfigService} from './uaa.config.service';
 import * as moment from 'moment';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {UaaEvent} from './uaa.event';
+import {UaaEventService} from './uaa.event.service';
 
 
 @Injectable()
@@ -22,7 +24,8 @@ export class JwtService {
 
   constructor(private hc: HttpClient,
               private storageService: StorageService,
-              private config: UaaConfigService) {
+              private config: UaaConfigService,
+              private uaaEventService: UaaEventService) {
 
     this.GRANT_TYPE = config.grantType == null ? 'password' : config.grantType;
     this.CLIENT_ID = config.clientID == null ? 'webapp' : config.clientID;
@@ -84,5 +87,13 @@ export class JwtService {
     this.storageService.set(this.REFRESH_KEY, refresh_token);
     this.storageService.set(this.TOKEN_EXPIRE_KEY, JSON.stringify(expiresAt.valueOf()));
     this.storageService.set(this.REFRESH_EXPIRE_KEY, JSON.stringify(refreshExpiresAt.valueOf()));
+  }
+
+  removeToken() {
+    this.storageService.remove(this.TOKEN_KEY);
+    this.storageService.remove(this.REFRESH_KEY);
+    this.storageService.remove(this.TOKEN_EXPIRE_KEY);
+    this.storageService.remove(this.REFRESH_EXPIRE_KEY);
+    this.uaaEventService.broadcast(UaaEvent.LOGOUT_SUCCESS);
   }
 }

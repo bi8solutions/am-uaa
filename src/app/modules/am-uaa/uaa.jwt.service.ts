@@ -4,6 +4,7 @@ import {LogService, Logger} from '@bi8/am-logger';
 import {Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/defer';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/map';
 
@@ -39,21 +40,15 @@ export class UaaJwtService implements UaaService {
     return this.hc.post<any>('/oauth/token', formBody, {headers: headers})
       .map(res => {
         this.jwtService.setSession(res);
+        this.uaaEventService.broadcast(UaaEvent.LOGIN_SUCCESS);
+        this.uaaEventService.broadcast(UaaEvent.LOGIN_PROVIDED);
         return res;
       });
   }
 
   doLogout(silent?: boolean) {
     this.uaaEventService.broadcast(UaaEvent.LOGOUT_START);
-    return Observable.of(() => {
-      this.storageService.remove(this.jwtService.TOKEN_KEY);
-      this.storageService.remove(this.jwtService.REFRESH_KEY);
-      this.storageService.remove(this.jwtService.TOKEN_EXPIRE_KEY);
-      this.storageService.remove(this.jwtService.REFRESH_EXPIRE_KEY);
-      return true;
-    }).map(res => {
-      this.uaaEventService.broadcast(UaaEvent.LOGOUT_SUCCESS);
-    });
+    return Observable.defer(() => this.jwtService.removeToken());
   }
 
   getIdentity(refresh?: boolean, silent?: boolean): Observable<any> | any {
@@ -64,7 +59,7 @@ export class UaaJwtService implements UaaService {
     } else {
       this.uaaEventService.broadcast(UaaEvent.LOGIN_REQUIRED);
       return this.uaaEventService.getEventSourceObserver()
-        .filter(event => event === UaaEvent.LOGIN_DIALOG_BEFORE_CLOSED)
+        .filter(event => event === UaaEvent.LOGIN_PROVIDED)
         .switchMap(event => {
           const identity = this.storageService.get(this.jwtService.TOKEN_KEY);
           return Observable.of(this.jwtService.decode(identity));

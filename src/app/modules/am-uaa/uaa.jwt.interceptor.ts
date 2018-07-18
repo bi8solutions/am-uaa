@@ -113,7 +113,7 @@ export class UaaJwtInterceptor implements HttpInterceptor {
     this.uaaService.doLogout();
     this.uaaEventService.broadcast(UaaEvent.LOGIN_REQUIRED);
     return this.uaaEventService.getEventSourceObserver()
-      .filter(event => event === UaaEvent.LOGIN_DIALOG_BEFORE_CLOSED)
+      .filter(event => event === UaaEvent.LOGIN_PROVIDED)
       .switchMap(event => {
         this.isRefreshingToken = false;
         return next.handle(this.addToken(req, this.jwtService.getToken()));
