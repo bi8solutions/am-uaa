@@ -2,9 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {LogService, Logger} from '@bi8/am-logger';
 import {ActivatedRoute} from '@angular/router';
 import {UaaEventService} from '../modules/am-uaa/uaa.event.service';
-import {UaaEvent} from '../modules/am-uaa/uaa.event';
 import {HttpService} from './http.service';
-import {UaaConfig} from '../modules/am-uaa/uaa.config';
+import {UaaConfig} from '../modules/am-uaa/uaa.config.service';
 import {UaaService} from '../modules/am-uaa/uaa.service';
 
 @Component({
@@ -36,25 +35,22 @@ export class HomeComponent implements OnInit {
 
   logout() {
     console.log('doLogout()');
-    const obs = this.uaaService.doLogout();
-    if (!this.config.useJwt) {
-      obs.subscribe();
-    }
+    this.uaaService.doLogout().subscribe();
   }
-
-  loggedIn() {
-    console.dir(this.uaaService.isLoggedIn());
-  }
-
-  expiresAt() {
-    console.dir(this.uaaService.getExpiration(this.uaaService.TOKEN_EXPIRE_KEY));
-  }
-
-  refreshToken() {
-    this.uaaService.doRefresh().subscribe(res => {
-      console.dir(res);
-    });
-  }
+  //
+  // loggedIn() {
+  //   console.dir(this.uaaService.isLoggedIn());
+  // }
+  //
+  // expiresAt() {
+  //   console.dir(this.uaaService.getExpiration(this.uaaService.TOKEN_EXPIRE_KEY));
+  // }
+  //
+  // refreshToken() {
+  //   this.uaaService.doRefresh().subscribe(res => {
+  //     console.dir(res);
+  //   });
+  // }
 
   callEndpoint() {
     this.httpService.getCall('/api/uaa/session/jwt/greet').subscribe(res => {

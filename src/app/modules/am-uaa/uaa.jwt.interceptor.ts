@@ -23,64 +23,32 @@ import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/throw';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {StorageService} from '@bi8/am-storage';
-import {UaaConfig} from './uaa.config';
+import {UaaConfigService} from './uaa.config.service';
+import {JwtService} from './jwt.service';
 import {UaaService} from './uaa.service';
 
 @Injectable()
-export class UaaInterceptor implements HttpInterceptor {
+export class UaaJwtInterceptor implements HttpInterceptor {
 
-  cachedRequests: Array<HttpRequest<any>> = [];
   isRefreshingToken = false;
   tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
-  constructor(@Inject('UaaConfig') private config: UaaConfig,
-              private uaaEventService: UaaEventService,
+  constructor(private uaaEventService: UaaEventService,
               private storageService: StorageService,
-              private uaaService: UaaService) {
+              private jwtService: JwtService,
+              private uaaService: UaaService,
+              private configService: UaaConfigService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.config.useJwt) {
-      return this.jwtIntercept(req, next);
-    } else {
-      return this.sessionIntercept(req, next);
+    if (!this.configService.useJwt) {
+      return next.handle(req);
     }
-  }
-
-  private sessionIntercept(req, next) {
-    const xRequestedWith = req.clone({
-      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
-        .set('Cache-Control', 'no-cache')
-        .set('Pragma', 'no-cache')
-        .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
-    });
-
-    const observable = next.handle(xRequestedWith);
-
-    return observable.map((event: HttpEvent<any>) => {
-      return event;
-    }).catch(error => {
-      if (error instanceof HttpErrorResponse) {
-        if (error.status === 401 && !_.endsWith(error.url, '/login')) {
-          this.uaaEventService.broadcast(UaaEvent.LOGIN_REQUIRED);
-          return this.uaaEventService.getEventSourceObserver().filter(event => {
-            return event == UaaEvent.LOGIN_PROVIDED;
-          }).concatMap(event => observable.retry(1));
-        } else {
-          return Observable.throw(error);
-          //return Observable.empty() as Observable<HttpEvent<any>>;
-        }
-      }
-    });
-
-  }
-
-  private jwtIntercept(req, next) {
     if (req.headers.has('Authorization')) {
       return next.handle(req);
     }
 
-    const observable = next.handle(this.addToken(req, this.uaaService.getToken()));
+    const observable = next.handle(this.addToken(req, this.jwtService.getToken()));
     return observable.catch((error) => {
       if (error instanceof HttpErrorResponse) {
         switch ((<HttpErrorResponse>error).status) {
@@ -117,8 +85,8 @@ export class UaaInterceptor implements HttpInterceptor {
       // Reset here so that the following requests wait until the token
       // comes back from the refreshToken call.
       this.tokenSubject.next(null);
-      return this.uaaService.doRefresh().switchMap(res => {
-        const newToken = this.uaaService.getToken();
+      return this.jwtService.doRefresh().switchMap(res => {
+        const newToken = this.jwtService.getToken();
         if (newToken) {
           this.tokenSubject.next(newToken);
           return next.handle(this.addToken(req, newToken));
@@ -148,7 +116,7 @@ export class UaaInterceptor implements HttpInterceptor {
       .filter(event => event === UaaEvent.LOGIN_DIALOG_BEFORE_CLOSED)
       .switchMap(event => {
         this.isRefreshingToken = false;
-        return next.handle(this.addToken(req, this.uaaService.getToken()));
+        return next.handle(this.addToken(req, this.jwtService.getToken()));
       });
   }
 }

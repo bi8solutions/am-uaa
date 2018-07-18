@@ -3,7 +3,6 @@ import {UaaEventService} from '../modules/am-uaa/uaa.event.service';
 import {Logger, LogService} from '@bi8/am-logger';
 import {StorageService} from '@bi8/am-storage';
 import {Injectable} from '@angular/core';
-import {UaaConfig} from '../modules/am-uaa/uaa.config';
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
