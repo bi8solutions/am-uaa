@@ -71,7 +71,6 @@ export class UaaJwtInterceptor implements HttpInterceptor {
 
   private handle400Error(error, req, next) {
     if (error && error.status === 400 && error.error && error.error.error === 'invalid_grant') {
-      // If we get a 400 and the error message is 'invalid_grant', the token is no longer valid so logout.
       return this.requireLogin(req, next);
     }
 
@@ -82,8 +81,6 @@ export class UaaJwtInterceptor implements HttpInterceptor {
     if (!this.isRefreshingToken) {
       this.isRefreshingToken = true;
 
-      // Reset here so that the following requests wait until the token
-      // comes back from the refreshToken call.
       this.tokenSubject.next(null);
       return this.jwtService.doRefresh().switchMap(res => {
         const newToken = this.jwtService.getToken();
@@ -92,11 +89,8 @@ export class UaaJwtInterceptor implements HttpInterceptor {
           return next.handle(this.addToken(req, newToken));
         }
 
-        // If we don't get a new token, we are in trouble so logout.
         return this.requireLogin(req, next);
-      }).catch((error) => {
-        return this.requireLogin(req, next);
-      }).finally(() => {
+      }).catch(error => Observable.throw(error)).finally(() => {
         this.isRefreshingToken = false;
       });
     } else {
