@@ -54,8 +54,13 @@ export class UaaJwtService implements UaaService {
   getIdentity(refresh?: boolean, silent?: boolean): Observable<any> | any {
     if (this.jwtService.isLoggedIn() || this.jwtService.refreshValid()) {
       this.uaaEventService.broadcast((UaaEvent.LOAD_IDENTITY_START));
-      const identity = this.storageService.get(this.jwtService.TOKEN_KEY);
-      return Observable.of(this.jwtService.decode(identity));
+      let identity = this.storageService.get(this.jwtService.TOKEN_KEY);
+      identity = this.jwtService.decode(identity);
+      if (refresh) {
+        return Observable.of(identity);
+      } else {
+        return identity;
+      }
     } else {
       this.uaaEventService.broadcast(UaaEvent.LOGIN_REQUIRED);
       return this.uaaEventService.getEventSourceObserver()

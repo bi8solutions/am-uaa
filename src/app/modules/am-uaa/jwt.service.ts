@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
 import {StorageService} from '@bi8/am-storage';
-import * as jwt_decode from 'jwt-decode';
+import * as jwt_decode_ from 'jwt-decode';
 import {UaaConfigService} from './uaa.config.service';
-import * as moment from 'moment';
+import * as moment_ from 'moment';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UaaEvent} from './uaa.event';
 import {UaaEventService} from './uaa.event.service';
 
+const moment = moment_;
+const jwt_decode = jwt_decode_;
 
 @Injectable()
 export class JwtService {
