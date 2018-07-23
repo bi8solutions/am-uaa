@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Logger, LogService} from "@bi8/am-logger";
 import {UaaService} from "./modules/am-uaa/uaa.service";
 import {UaaEventService} from "./modules/am-uaa/uaa.event.service";
 import {UaaEvent} from "./modules/am-uaa/uaa.event";
@@ -13,15 +12,11 @@ import {LoginDialog} from "./login-dialog.component";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  logger: Logger;
   loggingIn: boolean = false;
 
-  constructor(private logService: LogService,
-              private matDialog: MatDialog,
+  constructor(private matDialog: MatDialog,
               public uaaService: UaaService,
               private uaaEventService: UaaEventService) {
-    this.logger = logService.getLogger(this.constructor.name);
-
     uaaEventService.subscribe((event)=>{
        switch (event){
          case UaaEvent.LOGIN_REQUIRED:

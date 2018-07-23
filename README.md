@@ -1,5 +1,46 @@
 # Angular Material Authentication and Authorization
 
+ng update @angular/cli
+yarn add @angular/cli
+
+ng update @angular/compiler-cli
+yarn add @angular/compiler-cli
+
+// for the angular.json file
+ng update @angular/cli
+
+
+ng update @angular/core
+ng update @angular/material
+ng update @angular/flex-layout
+
+yarn add @angular/core
+yarn add @angular/material
+yarn add @angular/flex-layout
+
+ng update ng-packagr
+yarn add ng-packagr
+
+
+
+
+
+
+yarn add core-js
+yarn add @angular/flex-layout
+yarn add lodash
+yarn add material-design-icons
+yarn add roboto-fontface
+yarn add zone.js
+yarn add ts-node
+yarn add tsickle
+yarn add tslib
+
+ng update @angular/cli
+yarn add rxjs-compat
+
+ng update
+
 AmUaa is a simple framework for handling simple User Authentication.  
 
 Please note that this is a *Proof of Concept* library and not meant for production use and that the API can 

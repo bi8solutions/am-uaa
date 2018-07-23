@@ -1,9 +1,15 @@
 import {Injectable, Inject} from '@angular/core';
 import {UaaConfig} from './uaa.config';
 import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
-import {LogService, Logger} from "@bi8/am-logger";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
+
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/observable/throw';
 
 import {UaaEventService} from "./uaa.event.service";
 import {UaaEvent} from "./uaa.event";
@@ -14,15 +20,10 @@ const IDENTITY_KEY: string = '_uaa_identity_';
 @Injectable()
 export class UaaService {
 
-  logger: Logger;
-
   constructor(@Inject('UaaConfig') private config: UaaConfig,
               private hc: HttpClient,
-              private logService: LogService,
               private storageService: StorageService,
               private uaaEventService: UaaEventService) {
-
-    this.logger = logService.getLogger(this.constructor.name);
   }
 
   doLogin(username: string, password: string, silent?: boolean) : Observable<any>  {

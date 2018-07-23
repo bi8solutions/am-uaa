@@ -3,8 +3,12 @@ import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, Http
 import * as _ from 'lodash';
 import {UaaEventService} from "./uaa.event.service";
 import {UaaEvent} from "./uaa.event";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/observable/throw';

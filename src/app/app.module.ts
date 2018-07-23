@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {AmLoggerModule, LogConfig, LogLevel} from "@bi8/am-logger";
 import {UaaConfig} from "./modules/am-uaa/uaa.config";
 import {AmStorageModule} from "@bi8/am-storage";
 import {AmUaaModule} from "./modules/am-uaa/am-uaa.module";
@@ -15,10 +14,6 @@ import {HomeModule} from "./home/home.module";
 import {MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatInputModule, MatToolbarModule} from "@angular/material";
 import {LoginDialog} from "./login-dialog.component";
 
-const logConfig : LogConfig = {
-  level: LogLevel.debug
-};
-
 const uaaConfig : UaaConfig = {};
 
 @NgModule({
@@ -30,7 +25,6 @@ const uaaConfig : UaaConfig = {};
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    AmLoggerModule,
     AmStorageModule,
     AmUaaModule,
     HttpClientModule,
@@ -47,7 +41,6 @@ const uaaConfig : UaaConfig = {};
   ],
   entryComponents: [LoginDialog],
   providers:    [
-      { provide: 'LogConfig', useValue: logConfig },
       { provide: 'UaaConfig', useValue: uaaConfig }
   ],
   bootstrap: [AppComponent]

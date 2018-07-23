@@ -3,7 +3,6 @@ import {MatDialogRef} from "@angular/material";
 
 import {FormControl, FormBuilder, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA} from '@angular/material';
-import {LogService, Logger} from "@bi8/am-logger";
 
 import {Observable} from "rxjs/Observable";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
@@ -16,8 +15,6 @@ import {UaaEvent} from "./modules/am-uaa/uaa.event";
   styleUrls: ['./login-dialog.component.css']
 })
 export class LoginDialog implements OnInit {
-
-  logger: Logger;
   errorMessage: string;
 
   username = new FormControl('');
@@ -32,22 +29,16 @@ export class LoginDialog implements OnInit {
               public dialogRef: MatDialogRef<LoginDialog>,
               public fb: FormBuilder,
               public uaaEventService: UaaEventService,
-              private logService: LogService,
               private hc: HttpClient) {
-
-    this.logger = logService.getLogger(this.constructor.name);
-    this.logger.debug("Login Dialog Created");
   }
 
   ngOnInit(): void {
-    this.logger.debug('(ngOnInit)');
     this.uaaEventService.broadcast(UaaEvent.LOGIN_DIALOG_OPENED);
   }
 
   submit(){
     this.errorMessage = null;
     let value = this.loginForm.value;
-    this.logger.debug('(submit)');
     this.data.uaaService.doLogin(value.username, value.password)
       .subscribe(result => {
         this.uaaEventService.broadcast(UaaEvent.LOGIN_DIALOG_BEFORE_CLOSED);
@@ -55,7 +46,6 @@ export class LoginDialog implements OnInit {
 
     }, error =>{
         this.errorMessage = "Authentication Failed.  Please try again.";
-        this.logger.error(error);
     });
   }
 }
