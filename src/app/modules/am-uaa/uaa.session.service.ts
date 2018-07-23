@@ -1,28 +1,21 @@
-import {Injectable, Inject} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
-import {LogService, Logger} from '@bi8/am-logger';
-import {Observable} from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
 
 import {UaaEventService} from './uaa.event.service';
 import {UaaEvent} from './uaa.event';
 import {StorageService} from '@bi8/am-storage';
 import {UaaService} from './uaa.service';
-import {UaaConfigService} from './uaa.config.service';
 
 const IDENTITY_KEY = '_uaa_identity_';
 
 @Injectable()
 export class UaaSessionService implements UaaService {
 
-  logger: Logger;
-
   constructor(private hc: HttpClient,
-              private logService: LogService,
               private storageService: StorageService,
               private uaaEventService: UaaEventService) {
-
-    this.logger = logService.getLogger(this.constructor.name);
   }
 
   doLogin(username: string, password: string, silent?: boolean): Observable<any> {

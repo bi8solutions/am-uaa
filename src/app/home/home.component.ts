@@ -9,7 +9,7 @@ import {UaaService} from '../modules/am-uaa/uaa.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor(@Inject('UaaConfig') private config: UaaConfig,
+  constructor(@Inject('UaaConfig') public config: UaaConfig,
               private uaaService: UaaService,
               private httpService: HttpService) {
   }

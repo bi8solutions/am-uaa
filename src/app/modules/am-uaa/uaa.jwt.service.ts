@@ -1,8 +1,6 @@
 import {Injectable, Inject} from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
-import {LogService, Logger} from '@bi8/am-logger';
-import {Observable} from 'rxjs/Observable';
-import * as moment from 'moment';
+import {Observable} from 'rxjs';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/defer';
 import 'rxjs/add/operator/delay';
@@ -12,23 +10,17 @@ import {UaaEventService} from './uaa.event.service';
 import {UaaEvent} from './uaa.event';
 import {StorageService} from '@bi8/am-storage';
 import {UaaService} from './uaa.service';
-import {UaaConfigService} from './uaa.config.service';
 import {JwtService} from './jwt.service';
 
 
 @Injectable()
 export class UaaJwtService implements UaaService {
 
-  logger: Logger;
-
   constructor(private hc: HttpClient,
-              private logService: LogService,
               private storageService: StorageService,
               private uaaEventService: UaaEventService,
               private jwtService: JwtService) {
-    this.logger = logService.getLogger(this.constructor.name);
   }
-
 
   doLogin(username: string, password: string): Observable<any> {
     const formBody = `grant_type=${this.jwtService.GRANT_TYPE}&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&client=${encodeURIComponent(this.jwtService.CLIENT_ID)}`;

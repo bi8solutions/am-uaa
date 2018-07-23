@@ -1,26 +1,21 @@
-import {Injectable} from '@angular/core';
-import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest} from '@angular/common/http';
+import {Injectable} from "@angular/core";
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import * as _ from 'lodash';
-import {UaaEventService} from './uaa.event.service';
-import {UaaEvent} from './uaa.event';
-import {Observable} from 'rxjs/Observable';
+import {UaaEventService} from "./uaa.event.service";
+import {UaaEvent} from "./uaa.event";
+import {Observable} from "rxjs";
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/retry';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/throw';
-import {UaaConfigService} from './uaa.config.service';
+import {UaaConfigService} from "./uaa.config.service";
 
 @Injectable()
-export class UaaSessionInterceptor implements HttpInterceptor {
+export class UaaInterceptor implements HttpInterceptor {
 
   cachedRequests: Array<HttpRequest<any>> = [];
 

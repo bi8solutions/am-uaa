@@ -1,9 +1,7 @@
-import {Logger} from '@bi8/am-logger';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
 
 export interface Uaa {
-  logger: Logger;
 }
 
 export abstract class UaaService {

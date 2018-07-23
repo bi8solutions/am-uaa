@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {UaaEventService} from './uaa.event.service';
 import {IdentityResolver} from './identity.resolver';
 import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
-import {UaaSessionInterceptor} from './uaa.session.interceptor';
+import {UaaInterceptor} from './uaa.session.interceptor';
 import {UaaJwtService} from './uaa.jwt.service';
 import {StorageService} from '@bi8/am-storage';
 import {UaaSessionService} from './uaa.session.service';
@@ -18,7 +18,7 @@ import {JwtService} from './jwt.service';
   ],
   providers: [UaaEventService, IdentityResolver, UaaConfigService, JwtService, {
     provide: HTTP_INTERCEPTORS,
-    useClass: UaaSessionInterceptor,
+    useClass: UaaInterceptor,
     multi: true,
   }, {
     provide: HTTP_INTERCEPTORS,
