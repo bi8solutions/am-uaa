@@ -5,6 +5,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {AmUaaModule} from "../modules/am-uaa/am-uaa.module";
+import {HttpService} from './http.service';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {AmUaaModule} from "../modules/am-uaa/am-uaa.module";
     AmUaaModule
   ],
   declarations: [HomeComponent],
-  exports: [HomeComponent]
+  exports: [HomeComponent],
+  providers: [HttpService]
 
 })
 export class HomeModule { }

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {UaaConfig} from "./modules/am-uaa/uaa.config";
+import {UaaConfig} from "./modules/am-uaa/uaa.config.service";
 import {AmStorageModule} from "@bi8/am-storage";
 import {AmUaaModule} from "./modules/am-uaa/am-uaa.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -14,7 +14,9 @@ import {HomeModule} from "./home/home.module";
 import {MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatInputModule, MatToolbarModule} from "@angular/material";
 import {LoginDialog} from "./login-dialog.component";
 
-const uaaConfig : UaaConfig = {};
+const uaaConfig: UaaConfig = {
+  useJwt: true
+};
 
 @NgModule({
   declarations: [
