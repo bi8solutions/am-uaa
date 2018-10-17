@@ -11,6 +11,7 @@ import {UaaEvent} from './uaa.event';
 import {StorageService} from '@bi8/am-storage';
 import {UaaService} from './uaa.service';
 import {JwtService} from './jwt.service';
+import {Identity} from './identity';
 
 
 @Injectable()
@@ -43,15 +44,15 @@ export class UaaJwtService implements UaaService {
     return Observable.defer(() => this.jwtService.removeToken());
   }
 
-  getIdentity(refresh?: boolean, silent?: boolean): Observable<any> | any {
+  getIdentity(refresh?: boolean, silent?: boolean): Observable<Identity> | Identity {
     if (this.jwtService.isLoggedIn() || this.jwtService.refreshValid()) {
       this.uaaEventService.broadcast((UaaEvent.LOAD_IDENTITY_START));
       let identity = this.storageService.get(this.jwtService.TOKEN_KEY);
       identity = this.jwtService.decode(identity);
       if (refresh) {
-        return Observable.of(identity);
+        return Observable.of(new Identity(identity));
       } else {
-        return identity;
+        return new Identity(identity);
       }
     } else {
       this.uaaEventService.broadcast(UaaEvent.LOGIN_REQUIRED);
@@ -59,7 +60,7 @@ export class UaaJwtService implements UaaService {
         .filter(event => event === UaaEvent.LOGIN_PROVIDED)
         .switchMap(event => {
           const identity = this.storageService.get(this.jwtService.TOKEN_KEY);
-          return Observable.of(this.jwtService.decode(identity));
+          return Observable.of(new Identity(this.jwtService.decode(identity)));
         });
     }
   }

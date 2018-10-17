@@ -108,11 +108,14 @@ export class UaaJwtInterceptor implements HttpInterceptor {
   private requireLogin(req, next): Observable<any> {
     this.uaaService.doLogout();
     this.uaaEventService.broadcast(UaaEvent.LOGIN_REQUIRED);
-    return this.uaaEventService.getEventSourceObserver()
+    return next.handle(req);
+
+    // Don't retry as roles might have changed
+    /*return this.uaaEventService.getEventSourceObserver()
       .filter(event => event === UaaEvent.LOGIN_PROVIDED)
       .switchMap(event => {
         this.isRefreshingToken = false;
         return next.handle(this.addToken(req, this.jwtService.getToken()));
-      });
+      });*/
   }
 }
