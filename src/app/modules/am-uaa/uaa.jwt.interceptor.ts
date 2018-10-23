@@ -91,7 +91,7 @@ export class UaaJwtInterceptor implements HttpInterceptor {
 
         return this.requireLogin(req, next);
       }).catch(error => {
-        return this.handle400Error(error, req, next);
+        return this.requireLogin(req, next);
       }).finally(() => {
         this.isRefreshingToken = false;
       });

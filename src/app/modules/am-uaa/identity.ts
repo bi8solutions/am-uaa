@@ -7,6 +7,7 @@ export class Identity {
   initials: string;
   lastName: string;
   roles: any[];
+  delegatedRoles: any[];
   user_name: string;
 
   constructor(tokenIdentity: any) {
@@ -17,29 +18,53 @@ export class Identity {
     this.lastName = tokenIdentity.lastName;
     this.roles = tokenIdentity.roles;
     this.user_name = tokenIdentity.user_name;
+    this.delegatedRoles = tokenIdentity.delegatedRoles;
   }
 
   hasRole(roleName: string) {
     let contains = false;
-    this.roles.forEach(role => {
-      if (role.name === roleName) {
-        contains = true;
-      }
-    });
+    if (this.roles && this.roles.length > 0) {
+      this.roles.forEach(role => {
+        if (role.name === roleName) {
+          contains = true;
+        }
+      });
+    }
+    if (this.delegatedRoles && this.delegatedRoles.length > 0) {
+      this.delegatedRoles.forEach(role => {
+        if (role.name === roleName) {
+          contains = true;
+        }
+      });
+    }
     return contains;
   }
 
   hasRoles(roleNames: string[]) {
-    const roles = _.map(this.roles, 'name');
-    const intersect = _.intersection(roles, roleNames);
+    let roles = [];
+    if (this.roles && this.roles.length > 0) {
+      roles = _.map(this.roles, 'name');
+    }
+    if (this.delegatedRoles && this.delegatedRoles.length > 0) {
+      const delegateRoles = _.map(this.delegatedRoles, 'name');
+      roles = _.union(roles, delegateRoles);
+    }
 
+    const intersect = _.intersection(roles, roleNames);
     return intersect.length === roleNames.length;
   }
 
   hasAnyRole(roleNames: string[]) {
-    const roles = _.map(this.roles, 'name');
-    const intersect = _.intersection(roles, roleNames);
+    let roles = [];
+    if (this.roles && this.roles.length > 0) {
+      roles = _.map(this.roles, 'name');
+    }
+    if (this.delegatedRoles && this.delegatedRoles.length > 0) {
+      const delegatedRoles = _.map(this.delegatedRoles, 'name');
+      roles = _.union(roles, delegatedRoles);
+    }
 
+    const intersect = _.intersection(roles, roleNames);
     return intersect.length > 0;
   }
 
