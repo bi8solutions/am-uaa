@@ -30,7 +30,7 @@ export class UaaJwtService implements UaaService {
       'Authorization': `Basic ${btoa(`${this.jwtService.CLIENT_ID}:${this.jwtService.CLIENT_PASSWORD}`)}`
     });
 
-    return this.hc.post<any>('/oauth/token', formBody, {headers: headers})
+    return this.hc.post<any>('/api/oauth/token', formBody, {headers: headers})
       .map(res => {
         this.jwtService.setSession(res);
         this.uaaEventService.broadcast(UaaEvent.LOGIN_SUCCESS);

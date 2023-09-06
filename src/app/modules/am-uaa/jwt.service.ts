@@ -69,7 +69,7 @@ export class JwtService {
       'Authorization': `Basic ${btoa(`${this.CLIENT_ID}:`)}`
     });
 
-    return this.hc.post<any>('/oauth/token', formBody, {headers: headers})
+    return this.hc.post<any>('/api/oauth/token', formBody, {headers: headers})
       .map(res => {
         this.setSession(res);
         return res;

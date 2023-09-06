@@ -1,13 +1,6 @@
 {
-  "/oauth": {
-    "target": "https://localhost:8043",
-    "secure": false,
-    "changeOrigin": true,
-    "logLevel": "debug"
-  },
-
   "/api": {
-    "target": "https://localhost:8043",
+    "target": "https://localhost:8080",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
